@@ -126,6 +126,50 @@ void fa_add_transition(struct fa *self, size_t from, char alpha, size_t to) {
    
 }
 
+//Suppression d'une transition
+
+void fa_remove_transition(struct fa *self, size_t from, char alpha, size_t to){
+    state_node *begin, *preview ;
+
+    begin = self->transitions[from];
+    preview = begin;
+    while(begin != NULL){
+       if (alpha != begin->letter || to != begin->state) {
+       preview = begin;
+       begin = begin->next;
+        }
+      else { // suppression
+               
+               if (preview == begin) self->transitions[from] = begin->next; 
+               else preview->next = begin->next;
+               free(begin);
+            }
+    }
+
+}
+/*void fa_remove_state(struct fa *self, size_t state) {
+  state_node *first;
+
+  //free(self->transitions[state]);
+  self->state_count--;
+  char c;
+  
+  for (size_t i=0;i < self->state_count; i++) {
+     first = self->transitions[i];
+     while ( first != NULL) {
+       if ( first->state == state) {
+          for (int j=0; j < self->alpha_count; j++) {
+            c = toascii(j+97);
+            fa_remove_transition(self, i, c,state);
+          }
+       }
+       first=first->next;
+     }
+  }
+
+}
+*/
+
 //  Fonction pour afficher un automate
 void fa_pretty_print(const struct fa *self, FILE *out) {
    int i;
@@ -171,7 +215,7 @@ void fa_pretty_print(const struct fa *self, FILE *out) {
 void fa_dot_print ( const fa *self, FILE *out )
 {
     state_node *begin;
-    char c = NULL;
+    char c ;
 
     fprintf( out, "digraph finite_state_machine {\n" );
 

@@ -50,6 +50,8 @@ void fa_set_state_final(struct fa *self, size_t state);
 
 //Ajouter un transition
 void fa_add_transition(struct fa *self, size_t from, char alpha, size_t to);
+//Supprimer une transition
+void fa_remove_transition(struct fa *self, size_t from, char alpha, size_t to);
 
 //Afficher un automate
 void fa_pretty_print(const struct fa *self, FILE *out);
