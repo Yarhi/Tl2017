@@ -214,8 +214,8 @@ void fa_pretty_print(const struct fa *self, FILE *out) {
 
 void fa_dot_print ( const fa *self, FILE *out )
 {
-    state_node *begin;
-    char c ;
+    state_node *transitions;
+    char c = NULL;
 
     fprintf( out, "digraph finite_state_machine {\n" );
 
@@ -239,16 +239,13 @@ void fa_dot_print ( const fa *self, FILE *out )
 
     for ( int i = 0; i < self->state_count; i++ )
     {
-        begin = self->transitions[i];
+        transitions = self->transitions[i];
 
-        while ( ( begin != NULL ) && ( c == begin->letter ) )
+        while ( transitions != NULL )
         {
-            for ( int j = 0; j < self->alpha_count; j++ )
-            {
-                c = (char) toascii(j + 97);
-                fprintf( out, "\tLR_%i -> LR_%zu [label = \"%c\" ];", i, begin->state, c);
-            }
-            begin = begin->next;
+            c = (char) toascii(transitions->letter + 97);
+            fprintf( out, "\tLR_%i -> LR_%zu [label = \"%c\" ];\n", i, transitions->state, c);
+            transitions = transitions->next;
         }
     }
 
