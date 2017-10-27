@@ -47,10 +47,10 @@ int main ( int argc, char **argv )
     sortie = fopen("./sortie.txt","w");
     fa_pretty_print(autom,sortie);
 
-    dot = fopen("./graph_test.dot", "w");
+    dot = fopen("../graph_test.dot", "w");
     fa_dot_print(autom, dot);
 
-    system("dot -Tpng ./graph.dot > ./output.png");
+    system("dot -Tpng ./graph_test.dot > ./output.png");
     fclose(sortie);
     //Destruction de l'automate
     fa_destroy(autom);
