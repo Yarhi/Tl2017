@@ -42,7 +42,6 @@ int main ( int argc, char **argv )
     fa_add_transition(autom,3,'a',3);
     fa_add_transition(autom,3,'b',4);
     fa_add_transition(autom,4,'a',4);
-    fa_remove_transition(autom,0,'a',2);
     // affichage de l'automate
     sortie = fopen("./files/sortie.txt","w");
     fa_pretty_print(autom,sortie);
