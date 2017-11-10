@@ -50,7 +50,7 @@ int main ( int argc, char **argv )
     dot = fopen("../graph_test.dot", "w");
     fa_dot_print(autom, dot);
 
-    system("dot -Tpng ./graph_test.dot > ./output.png");
+    system("dot -Tpng ../graph_test.dot > ../output.png");
     fclose(sortie);
     //Destruction de l'automate
     fa_destroy(autom);
