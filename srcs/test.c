@@ -44,13 +44,13 @@ int main ( int argc, char **argv )
     fa_add_transition(autom,4,'a',4);
     fa_remove_transition(autom,0,'a',2);
     // affichage de l'automate
-    sortie = fopen("./sortie.txt","w");
+    sortie = fopen("./files/sortie.txt","w");
     fa_pretty_print(autom,sortie);
 
-    dot = fopen("../graph_test.dot", "w");
+    dot = fopen("../files/graph_test.dot", "w");
     fa_dot_print(autom, dot);
 
-    system("dot -Tpng ../graph_test.dot > ../output.png");
+    system("dot -Tpng ../files/graph_test.dot > ../files/output.png");
     fclose(sortie);
     //Destruction de l'automate
     fa_destroy(autom);
