@@ -59,6 +59,20 @@ void fa_pretty_print(const struct fa *self, FILE *out);
 
 // Afficher un automate en DOT
 void fa_dot_print ( const fa *self, FILE *out );
+// Réponse 3.2: fonction pour supprimer un état
+void fa_remove_state(struct fa *self, size_t state);
+
+// Réponse 3.3: fonction qui compte le nombre de transitions d'un automate
+size_t fa_count_transitions(const struct fa *self);
+
+// Réponse 3.4: fonction qui établit si un automate est déterministe
+bool fa_is_deterministic(const struct fa *self);
+
+// Réponse 3.5: fonction qui établit si l'automate est complet
+bool fa_is_complete(const struct fa *self);
+
+// Réponse 3.6: fonction qui complète un automate
+void fa_make_complete(struct fa *self);
 
 
 

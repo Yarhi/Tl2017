@@ -126,49 +126,132 @@ void fa_add_transition(struct fa *self, size_t from, char alpha, size_t to) {
    
 }
 
-//Suppression d'une transition
+// Réponse 3.1: fonction pour supprimer une transition
+void fa_remove_transition(struct fa *self, size_t from, char alpha, size_t to) {
+   state_node *begin, *preview;
 
-void fa_remove_transition(struct fa *self, size_t from, char alpha, size_t to){
-    state_node *begin, *preview ;
-
-    begin = self->transitions[from];
-    preview = begin;
-    while(begin != NULL){
-       if (alpha != begin->letter || to != begin->state) {
+   begin = self->transitions[from];
+   preview = begin;
+   while (begin != NULL ) {
+     if (alpha != begin->letter || to != begin->state) {
        preview = begin;
        begin = begin->next;
-        }
-      else { // suppression
-               
+     } else { // suppression
+               // si preview = begin alors c'est le premier de la liste
                if (preview == begin) self->transitions[from] = begin->next; 
                else preview->next = begin->next;
                free(begin);
-            }
-    }
+            }  
+   }
 
 }
-/*void fa_remove_state(struct fa *self, size_t state) {
-  state_node *first;
 
-  //free(self->transitions[state]);
-  self->state_count--;
+
+// Réponse 3.2: fonction pour supprimer un état
+void fa_remove_state(struct fa *self, size_t state) {
+  state_node *first,*next;
+  // suppression des transitions sortantes de state
+  first = self->transitions[state];
+  while ( first != NULL ) {
+    next = first->next;
+    free(first);
+    first = next;
+  }
+  self->transitions[state] = NULL;
+
+  // suppression des transitions entrantes à state
   char c;
-  
   for (size_t i=0;i < self->state_count; i++) {
      first = self->transitions[i];
      while ( first != NULL) {
        if ( first->state == state) {
-          for (int j=0; j < self->alpha_count; j++) {
-            c = toascii(j+97);
+          //for (int j=0; j < self->alpha_count; j++) {
+           // c = toascii(j+97);
+            c = first->letter;
             fa_remove_transition(self, i, c,state);
-          }
+          //}
        }
        first=first->next;
      }
   }
+  //self->state_count--;
 
 }
-*/
+
+// Réponse 3.3: fonction qui compte le nombre de transitions d'un automate
+size_t fa_count_transitions(const struct fa *self){
+
+  size_t count = 0;
+  state_node *first;
+  for (size_t i=0; i < self->state_count; i++) {
+     first = self->transitions[i];
+     while ( first != NULL) { 
+      count = count + 1;
+      first = first->next;
+     }
+  }
+  return(count);
+
+}
+
+// Réponse 3.4: fonction qui établit si un automate est déterministe
+bool fa_is_deterministic(const struct fa *self){
+  
+  // calculer le nombre d'états initiaux
+  size_t n = 0;
+  for(size_t i=0; i < self->state_count; i++) {
+      if (self->initial_states[i] == false) n++;
+  }
+  if (n > 1) return(false); // plusieurs états initiaux
+  
+  // parcourir la table des transitions
+  // pour chaque état voir s'il y a au moins 2 transitions avec la même lettre
+  bool equal;  
+  state_node *first;
+  for (size_t i=0; i < self->state_count; i++) {
+    first = self->transitions[i];
+    equal = false;
+    while ((first != NULL) && (first->next != NULL) && !equal) {
+      if (first->letter == (first->next)->letter) { 
+        // 2 transitions sortantes de i avec la même lettre
+        equal = true;
+        return(false);
+      } else first = first->next;
+    }
+  }
+  return(true);
+  
+}
+
+// Réponse 3.5: fonction qui établit si l'automate est complet
+bool fa_is_complete(const struct fa *self) {
+
+  state_node *first;
+  for (size_t i=0; i < self->state_count; i++) {
+    first = self->transitions[i];
+    char c = 'a';
+    for (size_t j=0; j < self->alpha_count; j++){
+      bool find = false;
+      while (first != NULL && !find){
+        if (c == first->letter) find = true;
+        else first = first->next;
+      }
+      if (!find) return(false);
+      c = c + 1;
+    }
+  }
+  return(true);
+
+}
+
+// Réponse 3.6: fonction qui complète un automate
+void fa_make_complete(struct fa *self){
+
+  if (!fa_is_complete){
+    // compléter l'automate
+    // d'abord créer un état puits
+  }
+}
 
 //  Fonction pour afficher un automate
 void fa_pretty_print(const struct fa *self, FILE *out) {
