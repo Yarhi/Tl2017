@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.3)
+
 project(Tl2017_tests)
 
 add_definitions(${MSVC_COMPILER_DEFS})
