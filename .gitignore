@@ -1,4 +1,4 @@
 # Compiled source #
 ###################
-./idea
+./.idea
 ./cmake-build-debug
