@@ -298,7 +298,7 @@ void fa_pretty_print(const struct fa *self, FILE *out) {
 void fa_dot_print ( const fa *self, FILE *out )
 {
     state_node *transitions;
-    char c = NULL;
+    char c;
 
     fprintf( out, "digraph finite_state_machine {\n" );
 
