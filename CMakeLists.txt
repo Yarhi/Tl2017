@@ -5,10 +5,6 @@ project(Tl2017)
 add_subdirectory(src)
 
 find_package(Threads REQUIRED)
-if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-Wall -ansi -Wno-deprecated -pthread)
-endif()
-
 if(MSVC)
     set(MSVC_COMPILER_DEFS "-D_VARIADIC_MAX=10")
 endif()

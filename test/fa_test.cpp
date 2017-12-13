@@ -1,8 +1,20 @@
 #include <algorithm>
-#include "../src/fa.h"
 #include "gtest/gtest.h"
 
-TEST(fa_test, null_term_str_sort)
+extern "C" {
+    #include "../src/fa.h"
+}
+
+/*
+ *
+ */
+
+TEST(fa_structure, fa_create_test_1)
 {
-    EXPECT_EQ(0, 0);
+    fa *fa = (struct fa*) malloc(sizeof fa);
+    fa_create(fa,2,5);
+
+    EXPECT_NE(fa, nullptr);
+    EXPECT_EQ(fa->alpha_count, 2);
+    EXPECT_EQ(fa->state_count, 5);
 }
