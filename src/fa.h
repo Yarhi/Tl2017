@@ -70,6 +70,8 @@ void fa_add_transition(struct fa *self, size_t from, char alpha, size_t to);
 // Réponse 2.5: fonction pour afficher un automate
 void fa_pretty_print(const struct fa *self, FILE* out);
 
+void fa_dot_print ( const fa *self, FILE *out );
+
 //TP2
 
 // Réponse 3.1: fonction pour supprimer une transition

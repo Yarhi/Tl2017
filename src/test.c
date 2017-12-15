@@ -20,6 +20,7 @@ int main ( int argc, char **argv )
     fa *fa1=malloc(sizeof(fa));
     graph *g=malloc(sizeof(graph));
     FILE* sortie=NULL;
+    FILE* graph=NULL;
 
     // création d'un automate
     fa_create(fa1,2,5);
@@ -87,6 +88,9 @@ int main ( int argc, char **argv )
     fa_add_transition(fa1,3,'b',4);
     fa_add_transition(fa1,4,'a',4);
 
+    graph = fopen("graph.dot", "w+");
+    fa_dot_print(fa1, graph);
+
     // création du graphe
     graph_create_from_fa(g,fa1,false);
     // affichage graphe
@@ -119,7 +123,7 @@ int main ( int argc, char **argv )
     fa_add_transition(lhs,1,'b',1);
     fprintf(sortie,"\n\nL'automate lhs = \n\n");
     fa_pretty_print(lhs,sortie);
-
+    
     fa *rhs=malloc(sizeof(fa));
     fa_create(rhs,2,2);
     fa_set_state_initial(rhs,0);
